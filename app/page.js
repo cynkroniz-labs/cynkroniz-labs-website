@@ -6,6 +6,22 @@ const Check = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="4,12.5 9.5,18 20,6.5" /></svg>
 )
 
+// Rook: three merlons, tapered neck, flared base. Used in the nav and the
+// footer, so it lives here rather than being pasted into both.
+const RookMark = () => (
+  <span className="logo-mark">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path
+        d="M4 3H8V5.5H10V3H14V5.5H16V3H20V8L17 10.5V15L19 18L20 21H4L5 18L7 15V10.5L4 8Z"
+        fill="#0e1116"
+        stroke="#0e1116"
+        strokeWidth="0.6"
+        strokeLinejoin="round"
+      />
+    </svg>
+  </span>
+)
+
 export default function Home() {
   return (
     <>
@@ -16,18 +32,7 @@ export default function Home() {
       <nav className="nav" id="nav">
         <div className="nav-i">
           <a href="#top" className="logo">
-            <span className="logo-mark">
-              {/* Rook: three merlons, tapered neck, flared base. */}
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path
-                  d="M4 3H8V5.5H10V3H14V5.5H16V3H20V8L17 10.5V15L19 18L20 21H4L5 18L7 15V10.5L4 8Z"
-                  fill="#0e1116"
-                  strokeLinejoin="round"
-                  strokeWidth="0.6"
-                  stroke="#0e1116"
-                />
-              </svg>
-            </span>
+            <RookMark />
             Cynkroniz Labs
           </a>
           <ul className="nav-links">
@@ -336,11 +341,7 @@ export default function Home() {
           <div className="footer-top">
             <div className="footer-brand">
               <a href="#top" className="logo">
-                <span className="logo-mark">
-                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4 12h5l2.5-6 3 12L17 12h3" stroke="#0e1116" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </span>
+                <RookMark />
                 Cynkroniz Labs
               </a>
               <p>A monthly growth membership for local businesses that need marketing and follow-up to just keep running.</p>
