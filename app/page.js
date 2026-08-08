@@ -206,6 +206,8 @@ export default function Home() {
               <li className="svc-chip">Booking and quote tools</li>
               <li className="svc-chip">A new website, built fast</li>
               <li className="svc-chip">Landing pages</li>
+              <li className="svc-chip">Free guides that collect emails</li>
+              <li className="svc-chip">Copy rewritten to convert</li>
               <li className="svc-chip">Automatic review requests</li>
               <li className="svc-chip">Win-back campaigns</li>
               <li className="svc-chip">Email sequences</li>
