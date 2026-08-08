@@ -1,0 +1,128 @@
+{
+  "name": "New Lead — Supabase to Airtable + Resend",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "new-lead",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "webhook-new-lead",
+      "name": "Supabase Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [0, 0],
+      "webhookId": "new-lead",
+      "notes": "Supabase database webhook posts here on INSERT into audit_leads. Attach a Header Auth credential and have the webhook send the matching header."
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "is-insert",
+              "leftValue": "={{ $json.body.type }}",
+              "rightValue": "INSERT",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "filter-insert-only",
+      "name": "Only New Leads",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [220, 0],
+      "notes": "Guards against future UPDATE/DELETE events on audit_leads turning into duplicate emails."
+    },
+    {
+      "parameters": {
+        "resource": "record",
+        "operation": "upsert",
+        "base": {
+          "__rl": true,
+          "value": "REPLACE_WITH_AIRTABLE_BASE_ID",
+          "mode": "id"
+        },
+        "table": {
+          "__rl": true,
+          "value": "Leads",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "matchingColumns": ["Supabase ID"],
+          "value": {
+            "Supabase ID": "={{ $json.body.record.id }}",
+            "Name": "={{ $json.body.record.name }}",
+            "Business": "={{ $json.body.record.business }}",
+            "Email": "={{ $json.body.record.email }}",
+            "Website": "={{ $json.body.record.website || '' }}",
+            "Bottleneck": "={{ $json.body.record.bottleneck }}",
+            "Stage": "New",
+            "Submitted": "={{ $json.body.record.created_at }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "airtable-upsert",
+      "name": "Airtable: Upsert Lead",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [440, 0],
+      "notes": "Upsert (not create) keyed on Supabase ID, so a webhook retry updates the existing row instead of creating a duplicate lead."
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.resend.com/emails",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  from: $env.LEAD_NOTIFY_FROM,\n  to: [$env.LEAD_NOTIFY_TO],\n  reply_to: $('Only New Leads').item.json.body.record.email,\n  subject: `New audit lead: ${$('Only New Leads').item.json.body.record.name} — ${$('Only New Leads').item.json.body.record.business}`,\n  text: [\n    'New consultation request',\n    '',\n    `Name:       ${$('Only New Leads').item.json.body.record.name}`,\n    `Business:   ${$('Only New Leads').item.json.body.record.business}`,\n    `Email:      ${$('Only New Leads').item.json.body.record.email}`,\n    `Website:    ${$('Only New Leads').item.json.body.record.website || '—'}`,\n    `Bottleneck: ${$('Only New Leads').item.json.body.record.bottleneck}`,\n    '',\n    `Submitted:  ${$('Only New Leads').item.json.body.record.created_at}`\n  ].join('\\n')\n}) }}",
+        "options": {}
+      },
+      "id": "resend-notify",
+      "name": "Resend: Notify Me",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [660, 0],
+      "credentials": {},
+      "notes": "Attach a Header Auth credential: name 'Authorization', value 'Bearer re_your_key'. Plain text body on purpose — lead fields are attacker-controlled, and text can't carry injected markup."
+    }
+  ],
+  "connections": {
+    "Supabase Webhook": {
+      "main": [[{ "node": "Only New Leads", "type": "main", "index": 0 }]]
+    },
+    "Only New Leads": {
+      "main": [[{ "node": "Airtable: Upsert Lead", "type": "main", "index": 0 }]]
+    },
+    "Airtable: Upsert Lead": {
+      "main": [[{ "node": "Resend: Notify Me", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {}
+}

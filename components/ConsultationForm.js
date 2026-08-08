@@ -2,12 +2,15 @@
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase'
 
-export default function AuditForm() {
+// Matches the address already published in the site footer.
+const CONTACT_EMAIL = 'hello@cynkronizlabs.cloud'
+
+export default function ConsultationForm() {
   const [fields, setFields] = useState({ name: '', business: '', website: '', email: '', bottleneck: '' })
   const [errors, setErrors] = useState({})
   const [loading, setLoading] = useState(false)
   const [submitted, setSubmitted] = useState(false)
-  const [serverError, setServerError] = useState('')
+  const [serverError, setServerError] = useState(false)
 
   function set(key) {
     return (e) => {
@@ -26,7 +29,7 @@ export default function AuditForm() {
     if (Object.keys(newErrors).length > 0) { setErrors(newErrors); return }
 
     setLoading(true)
-    setServerError('')
+    setServerError(false)
     try {
       const supabase = createClient()
       const { error } = await supabase.from('audit_leads').insert({
@@ -40,7 +43,7 @@ export default function AuditForm() {
       setSubmitted(true)
     } catch (err) {
       console.error('Supabase insert error:', err)
-      setServerError('Something went wrong. Please try again.')
+      setServerError(true)
     } finally {
       setLoading(false)
     }
@@ -49,13 +52,13 @@ export default function AuditForm() {
   if (submitted) {
     return (
       <div className="form-success">
-        <h3>Audit request received.</h3>
-        <p>{"We'll review your situation and send your personalized findings within 48 hours."}</p>
+        <h3>Got it.</h3>
+        <p>{"I'll email you within one business day with a couple of times for your 15-minute audit."}</p>
       </div>
     )
   }
 
-  const errStyle = (key) => (errors[key] ? { borderColor: 'rgba(255,100,100,0.7)' } : {})
+  const errStyle = (key) => (errors[key] ? { borderColor: '#dc2626' } : {})
 
   return (
     <form onSubmit={handleSubmit} noValidate style={{ display: 'grid', gap: '14px' }}>
@@ -66,7 +69,7 @@ export default function AuditForm() {
         </div>
         <div className="fld">
           <label htmlFor="f-biz">Business Name</label>
-          <input id="f-biz" type="text" placeholder="Acme Co." value={fields.business} onChange={set('business')} style={errStyle('business')} />
+          <input id="f-biz" type="text" placeholder="Acme Plumbing" value={fields.business} onChange={set('business')} style={errStyle('business')} />
         </div>
       </div>
       <div className="fld">
@@ -78,23 +81,30 @@ export default function AuditForm() {
         <input id="f-email" type="email" placeholder="you@yourbusiness.com" value={fields.email} onChange={set('email')} style={errStyle('email')} />
       </div>
       <div className="fld">
-        <label htmlFor="f-bottleneck">Biggest Bottleneck Right Now</label>
+        <label htmlFor="f-bottleneck">What&apos;s Slipping Right Now</label>
         <select id="f-bottleneck" value={fields.bottleneck} onChange={set('bottleneck')} style={errStyle('bottleneck')}>
           <option value="" disabled>Choose one</option>
-          <option>Not enough visibility or traffic</option>
-          <option>Inconsistent content and social presence</option>
-          <option>Website doesn&apos;t convert visitors</option>
-          <option>Leads fall through the cracks</option>
-          <option>Slow follow-up and response time</option>
-          <option>Unclear messaging or positioning</option>
+          <option>We post when we remember — which isn&apos;t often</option>
+          <option>Nobody finds us on Google</option>
+          <option>The website doesn&apos;t turn visitors into calls</option>
+          <option>We miss calls and never call back</option>
+          <option>Leads come in and then go quiet</option>
+          <option>Past customers never hear from us again</option>
           <option>Not sure — I need fresh eyes</option>
         </select>
       </div>
-      {serverError && <p style={{ color: 'rgba(255,100,100,0.9)', fontSize: '13px' }}>{serverError}</p>}
+      {/* On failure the submission is not stored anywhere — always give the visitor
+          a way through rather than a dead end. */}
+      {serverError && (
+        <p className="form-error">
+          That didn&apos;t send. Please try again, or email{' '}
+          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> directly and I&apos;ll pick it up from there.
+        </p>
+      )}
       <div className="form-footer">
-        <span className="form-note">↳ Returned within 48 hours.</span>
-        <button type="submit" className="btn btn-p" disabled={loading}>
-          {loading ? 'Sending…' : <>Request My Free Audit <span className="arrow">→</span></>}
+        <span className="form-note">↳ Free. 15 minutes. No pitch.</span>
+        <button type="submit" className="btn btn-p btn-sm" disabled={loading}>
+          {loading ? 'Sending…' : <>Book my audit <span className="arrow">→</span></>}
         </button>
       </div>
     </form>

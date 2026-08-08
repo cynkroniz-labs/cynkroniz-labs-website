@@ -24,9 +24,9 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata = {
-  title: 'Cynkroniz Labs — Build Your Small Business Moat in the AI Era',
+  title: 'Cynkroniz Labs — Marketing and Follow-Up Systems for Local Businesses',
   description:
-    'Cynkroniz Labs helps busy business owners stay visible, trusted, and relevant using practical AI systems for content, marketing, lead capture, and follow-up.',
+    'One monthly subscription to keep your content, Google presence, website, and lead follow-up moving every month. Starting at $997/mo. Cancel anytime.',
 }
 
 export default function RootLayout({ children }) {
