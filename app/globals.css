@@ -256,6 +256,25 @@ strong { color: var(--ink); font-weight: 600; }
 .inc-ico svg { width: 21px; height: 21px; stroke: var(--cyan-ink); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .inc-card h3 { font-size: 20px; margin-bottom: 10px; }
 .inc-card p { font-size: 15px; line-height: 1.58; }
+
+/* The project queue: breadth of what can be built, shown as a chip list so it
+   reads at a glance instead of competing with the five cards above. */
+.svc {
+  margin-top: 16px; padding: 36px 34px;
+  background: var(--paper-2); border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 20px 44px; align-items: center;
+}
+.svc-head h3 { font-size: 20px; margin-bottom: 8px; }
+.svc-head p { font-size: 14.5px; line-height: 1.55; }
+.svc-chips { list-style: none; display: flex; flex-wrap: wrap; gap: 9px; }
+.svc-chip {
+  padding: 9px 15px; border-radius: 100px;
+  background: var(--card); border: 1px solid var(--line-2);
+  font-size: 14px; font-weight: 500; color: var(--ink);
+}
+@media (max-width: 880px) { .svc { grid-template-columns: 1fr; padding: 30px 26px; } }
 @media (max-width: 900px) {
   .inc-grid { grid-template-columns: 1fr 1fr; }
   .inc-card, .inc-card:nth-child(4), .inc-card:nth-child(5) { grid-column: span 1; }

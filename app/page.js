@@ -189,6 +189,28 @@ export default function Home() {
               </p>
             </div>
           </div>
+
+          <div className="svc rv">
+            <div className="svc-head">
+              <h3>And anything from the project queue</h3>
+              <p>
+                The five above run every month on their own. Alongside them you always have one
+                project moving. Request as many as you like, in any order, and we build them one at a
+                time until each is done.
+              </p>
+            </div>
+            <ul className="svc-chips">
+              <li className="svc-chip">An AI that answers your phone</li>
+              <li className="svc-chip">Chat that replies at 11pm</li>
+              <li className="svc-chip">Videos of you, without filming</li>
+              <li className="svc-chip">Booking and quote tools</li>
+              <li className="svc-chip">A new website, built fast</li>
+              <li className="svc-chip">Landing pages</li>
+              <li className="svc-chip">Automatic review requests</li>
+              <li className="svc-chip">Win-back campaigns</li>
+              <li className="svc-chip">Email sequences</li>
+            </ul>
+          </div>
         </div>
       </section>
 
