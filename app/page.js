@@ -1,6 +1,7 @@
 import NavScrollEffect from '@/components/NavScrollEffect'
 import RevealObserver from '@/components/RevealObserver'
 import ConsultationForm from '@/components/ConsultationForm'
+import CountStat from '@/components/CountStat'
 
 const Check = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="4,12.5 9.5,18 20,6.5" /></svg>
@@ -196,19 +197,19 @@ export default function Home() {
         <div className="wrap">
           <div className="proof-grid rv-stag">
             <div>
-              <div className="proof-n">3.8M</div>
+              <CountStat value={3.8} decimals={1} suffix="M" />
               <div className="proof-l">Instagram views for one creator in a single 90 day stretch</div>
             </div>
             <div>
-              <div className="proof-n">30,000</div>
+              <CountStat value={30000} />
               <div className="proof-l">New followers she picked up across those same 90 days</div>
             </div>
             <div>
-              <div className="proof-n">2.9M</div>
+              <CountStat value={2.9} decimals={1} suffix="M" />
               <div className="proof-l">TikTok views on her second account, with 33,000 shares</div>
             </div>
             <div>
-              <div className="proof-n">1.2M</div>
+              <CountStat value={1.2} decimals={1} suffix="M" />
               <div className="proof-l">Views across 8 videos on a channel built from zero</div>
             </div>
           </div>
