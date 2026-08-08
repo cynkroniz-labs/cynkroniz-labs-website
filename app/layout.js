@@ -24,7 +24,7 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata = {
-  title: 'Cynkroniz Labs — Marketing and Follow-Up Systems for Local Businesses',
+  title: 'Cynkroniz Labs · Marketing and Follow-Up Systems for Local Businesses',
   description:
     'One monthly subscription to keep your content, Google presence, website, and lead follow-up moving every month. Starting at $997/mo. Cancel anytime.',
 }

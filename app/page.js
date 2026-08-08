@@ -29,7 +29,7 @@ export default function Home() {
             <li><a href="#pricing">Pricing</a></li>
             <li><a href="#audit">Free audit</a></li>
           </ul>
-          <a href="#audit" className="btn btn-p btn-sm">Book a 15-minute audit</a>
+          <a href="#audit" className="btn btn-p btn-sm">Book a free audit</a>
         </div>
       </nav>
 
@@ -44,7 +44,7 @@ export default function Home() {
               follow-up moving every month.
             </p>
             <div className="hero-ctas">
-              <a href="#audit" className="btn btn-p">Book a 15-minute growth audit <span className="arrow">→</span></a>
+              <a href="#audit" className="btn btn-p">Book a free growth audit <span className="arrow">→</span></a>
               <a href="#included" className="btn btn-g">See what&apos;s included</a>
             </div>
             <p className="hero-note">
@@ -92,7 +92,7 @@ export default function Home() {
               <span className="model-tag">One at a time</span>
               <h3>One active project</h3>
               <p>
-                The work with a finish line. Request as many as you like — we build them one at a
+                The work with a finish line. Request as many as you like. We build them one at a
                 time, in your order, until each one is done and approved.
               </p>
               <ul className="model-ex">
@@ -128,7 +128,7 @@ export default function Home() {
               <h3>Social content</h3>
               <p>
                 Posts written, designed, and scheduled for the platforms your customers actually use.
-                Consistent and on-brand — without you writing a caption ever again.
+                Consistent and on-brand, without you writing a caption ever again.
               </p>
             </div>
 
@@ -138,7 +138,7 @@ export default function Home() {
               </div>
               <h3>Google Business Profile</h3>
               <p>
-                Photos, posts, services, hours, and review replies kept current — so you show up when
+                Photos, posts, services, hours, and review replies kept current, so you show up when
                 someone nearby searches for exactly what you do.
               </p>
             </div>
@@ -149,7 +149,7 @@ export default function Home() {
               </div>
               <h3>Website improvements</h3>
               <p>
-                Ongoing changes to the pages that make you money — clearer copy, faster load, better
+                Ongoing changes to the pages that make you money: clearer copy, faster load, better
                 calls to action. Improved monthly, not once every three years.
               </p>
             </div>
@@ -171,7 +171,7 @@ export default function Home() {
               </div>
               <h3>CRM automations</h3>
               <p>
-                New leads land in one place and get followed up automatically — reminders, review
+                New leads land in one place and get followed up automatically: reminders, review
                 requests, and win-back campaigns running whether you remember them or not.
               </p>
             </div>
@@ -191,9 +191,13 @@ export default function Home() {
               <div className="proof-n">4,101</div>
               <div className="proof-l">Subscribers from 10 videos on a channel built from zero</div>
             </div>
+            <div>
+              <div className="proof-n">21,875</div>
+              <div className="proof-l">Views those same 10 videos pulled in over the past year</div>
+            </div>
           </div>
           <p className="proof-cap">
-            These numbers come from creator accounts, not local businesses — but it&apos;s the same
+            These numbers come from creator accounts, not local businesses, but it&apos;s the same
             system: find the angle, keep publishing, and build something that keeps working after the
             work stops.
           </p>
@@ -214,7 +218,7 @@ export default function Home() {
               <h3>Subscribe</h3>
               <p>
                 Pick the membership and you&apos;re in. Onboarding is one call and about 30 minutes of
-                your time — then the always-on work starts immediately.
+                your time. Then the always-on work starts immediately.
               </p>
             </div>
             <div className="step">
@@ -259,9 +263,9 @@ export default function Home() {
                 <span className="price-per">/month</span>
               </div>
               <p className="price-sub">Pause the month you don&apos;t need us. Come back when you do.</p>
-              <a href="#audit" className="btn btn-p">Book a 15-minute growth audit <span className="arrow">→</span></a>
+              <a href="#audit" className="btn btn-p">Book a free growth audit <span className="arrow">→</span></a>
               <p className="price-fine">
-                Larger or multi-location businesses are quoted after the audit — never before.
+                Larger or multi-location businesses are quoted after the audit, never before.
               </p>
             </div>
 
@@ -286,17 +290,17 @@ export default function Home() {
           <div className="audit-card rv">
             <div className="audit-l">
               <span className="eyebrow">Free growth audit</span>
-              <h2>Start with 15 minutes.</h2>
+              <h2>Start with a free audit.</h2>
               <p>
                 Tell me about your business. I&apos;ll look at your website, your Google profile, and
-                what happens to a lead after it comes in — then tell you the three things worth fixing
+                what happens to a lead after it comes in, then tell you the three things worth fixing
                 first. Whether or not you ever hire us.
               </p>
               <ul className="audit-checks">
-                <li><Check />A real look at your actual business — not a generic checklist</li>
+                <li><Check />A real look at your actual business, not a generic checklist</li>
                 <li><Check />The three fixes that would move the needle fastest</li>
                 <li><Check />An honest answer on whether the membership is even right for you</li>
-                <li><Check />15 minutes. No pitch, no pressure, no obligation</li>
+                <li><Check />No pitch, no pressure, no obligation</li>
               </ul>
             </div>
             <div className="audit-r">
@@ -337,7 +341,7 @@ export default function Home() {
                 <h4>Contact</h4>
                 <ul>
                   <li><a href="mailto:hello@cynkronizlabs.cloud">hello@cynkronizlabs.cloud</a></li>
-                  <li><a href="#audit">Book a 15-minute audit</a></li>
+                  <li><a href="#audit">Book a free audit</a></li>
                 </ul>
               </div>
             </div>

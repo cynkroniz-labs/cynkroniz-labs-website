@@ -273,7 +273,7 @@ strong { color: var(--ink); font-weight: 600; }
   background: var(--paper-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
   padding: 64px 0;
 }
-.proof-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; text-align: center; }
+.proof-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; text-align: center; }
 .proof-n {
   font-family: var(--font-d); font-weight: 700; letter-spacing: -0.04em;
   font-size: clamp(38px, 5vw, 58px); line-height: 1; color: var(--ink);

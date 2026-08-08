@@ -53,7 +53,7 @@ export default function ConsultationForm() {
     return (
       <div className="form-success">
         <h3>Got it.</h3>
-        <p>{"I'll email you within one business day with a couple of times for your 15-minute audit."}</p>
+        <p>{"I'll email you within one business day with a couple of times for your audit."}</p>
       </div>
     )
   }
@@ -84,16 +84,16 @@ export default function ConsultationForm() {
         <label htmlFor="f-bottleneck">What&apos;s Slipping Right Now</label>
         <select id="f-bottleneck" value={fields.bottleneck} onChange={set('bottleneck')} style={errStyle('bottleneck')}>
           <option value="" disabled>Choose one</option>
-          <option>We post when we remember — which isn&apos;t often</option>
+          <option>We post when we remember, which isn&apos;t often</option>
           <option>Nobody finds us on Google</option>
           <option>The website doesn&apos;t turn visitors into calls</option>
           <option>We miss calls and never call back</option>
           <option>Leads come in and then go quiet</option>
           <option>Past customers never hear from us again</option>
-          <option>Not sure — I need fresh eyes</option>
+          <option>Not sure, I need fresh eyes</option>
         </select>
       </div>
-      {/* On failure the submission is not stored anywhere — always give the visitor
+      {/* On failure the submission is not stored anywhere, so always give the visitor
           a way through rather than a dead end. */}
       {serverError && (
         <p className="form-error">
@@ -102,7 +102,7 @@ export default function ConsultationForm() {
         </p>
       )}
       <div className="form-footer">
-        <span className="form-note">↳ Free. 15 minutes. No pitch.</span>
+        <span className="form-note">↳ Free. No pitch.</span>
         <button type="submit" className="btn btn-p btn-sm" disabled={loading}>
           {loading ? 'Sending…' : <>Book my audit <span className="arrow">→</span></>}
         </button>
