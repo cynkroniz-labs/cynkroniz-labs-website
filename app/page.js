@@ -287,9 +287,13 @@ export default function Home() {
                 <span className="price-per">/month</span>
               </div>
               <p className="price-sub">Pause the month you don&apos;t need us. Come back when you do.</p>
-              <a href="#audit" className="btn btn-p">Join today <span className="arrow">→</span></a>
+              <div className="price-ctas">
+                <a href="#join" className="btn btn-p">Join today <span className="arrow">→</span></a>
+                <a href="#audit" className="btn btn-g">Book a free audit</a>
+              </div>
               <p className="price-fine">
-                Larger or multi-location businesses are quoted after the audit, never before.
+                Not sure yet? Take the audit first. Larger or multi-location businesses are quoted
+                after it, never before.
               </p>
             </div>
 
@@ -327,9 +331,7 @@ export default function Home() {
                 <li><Check />No pitch, no pressure, no obligation</li>
               </ul>
             </div>
-            <div className="audit-r">
-              <h3>Request your audit</h3>
-              <p className="form-intro">Fill this in and I&apos;ll email you back with a time.</p>
+            <div className="audit-r" id="join">
               <ConsultationForm />
             </div>
           </div>

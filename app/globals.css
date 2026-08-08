@@ -343,6 +343,7 @@ strong { color: var(--ink); font-weight: 600; }
   display: grid; grid-template-columns: 1.05fr 1fr;
 }
 .price-l { padding: 48px 44px; border-right: 1px solid rgba(255, 255, 255, 0.10); }
+.price-ctas { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
 .price-name { font-family: var(--font-d); font-weight: 700; font-size: 22px; color: #fff; letter-spacing: -0.02em; }
 .price-badge {
   display: inline-block; margin-left: 10px; vertical-align: middle;
