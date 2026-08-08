@@ -273,7 +273,8 @@ strong { color: var(--ink); font-weight: 600; }
   background: var(--paper-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
   padding: 64px 0;
 }
-.proof-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; text-align: center; }
+/* auto-fit so the strip stays balanced however many stats sit in it */
+.proof-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 28px 20px; text-align: center; }
 .proof-n {
   font-family: var(--font-d); font-weight: 700; letter-spacing: -0.04em;
   font-size: clamp(38px, 5vw, 58px); line-height: 1; color: var(--ink);
@@ -307,6 +308,23 @@ strong { color: var(--ink); font-weight: 600; }
    PRICING
    ============================================= */
 .pricing { background: var(--dark); color: #fff; padding: 112px 0; position: relative; overflow: hidden; }
+
+/* Robot loop behind the pricing block. Sits under a dark scrim so the
+   card and copy keep their contrast no matter which frame is showing. */
+.pricing-bg { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.pricing-bg video {
+  width: 100%; height: 100%; object-fit: cover;
+  opacity: 0.22; filter: saturate(0.8);
+}
+.pricing-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 45%, rgba(11, 15, 22, 0.55), rgba(11, 15, 22, 0.88) 70%),
+    linear-gradient(180deg, var(--dark) 0%, transparent 22%, transparent 78%, var(--dark) 100%);
+}
+.pricing > .wrap { z-index: 1; }
+@media (prefers-reduced-motion: reduce) { .pricing-bg { display: none; } }
+
 .pricing::before {
   content: ""; position: absolute; left: 50%; top: -240px; transform: translateX(-50%);
   width: 760px; height: 520px; border-radius: 50%;

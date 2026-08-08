@@ -17,8 +17,15 @@ export default function Home() {
         <div className="nav-i">
           <a href="#top" className="logo">
             <span className="logo-mark">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4 12h5l2.5-6 3 12L17 12h3" stroke="#0e1116" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+              {/* Rook: three merlons, tapered neck, flared base. */}
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path
+                  d="M4 3H8V5.5H10V3H14V5.5H16V3H20V8L17 10.5V15L19 18L20 21H4L5 18L7 15V10.5L4 8Z"
+                  fill="#0e1116"
+                  strokeLinejoin="round"
+                  strokeWidth="0.6"
+                  stroke="#0e1116"
+                />
               </svg>
             </span>
             Cynkroniz Labs
@@ -185,15 +192,19 @@ export default function Home() {
           <div className="proof-grid rv-stag">
             <div>
               <div className="proof-n">76,100</div>
-              <div className="proof-l">Followers grown from 300 in 3.5 months, on strategy and content structure alone</div>
+              <div className="proof-l">Instagram followers, grown from 300 in 3.5 months</div>
+            </div>
+            <div>
+              <div className="proof-n">60K+</div>
+              <div className="proof-l">TikTok followers for that same creator, on the same strategy</div>
+            </div>
+            <div>
+              <div className="proof-n">1.2M</div>
+              <div className="proof-l">Views across 8 videos on a channel built from zero</div>
             </div>
             <div>
               <div className="proof-n">4,101</div>
-              <div className="proof-l">Subscribers from 10 videos on a channel built from zero</div>
-            </div>
-            <div>
-              <div className="proof-n">21,875</div>
-              <div className="proof-l">Views those same 10 videos pulled in over the past year</div>
+              <div className="proof-l">Subscribers those same 8 videos brought in</div>
             </div>
           </div>
           <p className="proof-cap">
@@ -243,6 +254,13 @@ export default function Home() {
 
       {/* PRICING */}
       <section className="pricing on-dark" id="pricing">
+        {/* Decorative only. Muted + playsInline so mobile browsers will autoplay it,
+            and hidden outright for anyone who asked for reduced motion. */}
+        <div className="pricing-bg" aria-hidden="true">
+          <video autoPlay loop muted playsInline preload="metadata">
+            <source src="/assets/hero.mp4" type="video/mp4" />
+          </video>
+        </div>
         <div className="wrap">
           <div className="head-c rv">
             <span className="eyebrow light">Pricing</span>
