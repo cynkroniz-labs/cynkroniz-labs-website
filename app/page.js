@@ -191,20 +191,20 @@ export default function Home() {
         <div className="wrap">
           <div className="proof-grid rv-stag">
             <div>
-              <div className="proof-n">76,100</div>
-              <div className="proof-l">Instagram followers, grown from 300 in 3.5 months</div>
+              <div className="proof-n">3.8M</div>
+              <div className="proof-l">Instagram views for one creator in a single 90 day stretch</div>
             </div>
             <div>
-              <div className="proof-n">60K+</div>
-              <div className="proof-l">TikTok followers for that same creator, on the same strategy</div>
+              <div className="proof-n">30,000</div>
+              <div className="proof-l">New followers she picked up across those same 90 days</div>
+            </div>
+            <div>
+              <div className="proof-n">2.9M</div>
+              <div className="proof-l">TikTok views on her second account, with 33,000 shares</div>
             </div>
             <div>
               <div className="proof-n">1.2M</div>
               <div className="proof-l">Views across 8 videos on a channel built from zero</div>
-            </div>
-            <div>
-              <div className="proof-n">4,101</div>
-              <div className="proof-l">Subscribers those same 8 videos brought in</div>
             </div>
           </div>
           <p className="proof-cap">
