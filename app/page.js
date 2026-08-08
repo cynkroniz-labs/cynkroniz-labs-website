@@ -287,7 +287,7 @@ export default function Home() {
                 <span className="price-per">/month</span>
               </div>
               <p className="price-sub">Pause the month you don&apos;t need us. Come back when you do.</p>
-              <a href="#audit" className="btn btn-p">Book a free growth audit <span className="arrow">→</span></a>
+              <a href="#audit" className="btn btn-p">Join today <span className="arrow">→</span></a>
               <p className="price-fine">
                 Larger or multi-location businesses are quoted after the audit, never before.
               </p>
