@@ -24,9 +24,9 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata = {
-  title: 'Cynkroniz Labs · Marketing and Follow-Up Systems for Local Businesses',
+  title: 'Cynkroniz Labs · AI Workflow Systems for Service Businesses',
   description:
-    'One monthly subscription to keep your content, Google presence, website, and lead follow-up moving every month. Starting at $997/mo. Cancel anytime.',
+    'AI and automation for professional-service businesses that have outgrown their manual workflows. We redesign the repetitive work between your people, software and clients.',
 }
 
 export default function RootLayout({ children }) {

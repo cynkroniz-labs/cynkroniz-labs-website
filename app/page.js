@@ -1,7 +1,10 @@
 import NavScrollEffect from '@/components/NavScrollEffect'
 import RevealObserver from '@/components/RevealObserver'
 import ConsultationForm from '@/components/ConsultationForm'
-import StatScramble from '@/components/StatScramble'
+
+// The audit request lives in a Google Form so its questions can change without
+// a deploy. Every "Request My AI Workflow Audit" button points here.
+const AUDIT_FORM_URL = 'https://forms.gle/zuffpP4zJmcWbc3e9'
 
 const Check = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="4,12.5 9.5,18 20,6.5" /></svg>
@@ -23,6 +26,75 @@ const RookMark = () => (
   </span>
 )
 
+const AuditButton = ({ className = 'btn btn-p' }) => (
+  <a href={AUDIT_FORM_URL} className={className} target="_blank" rel="noopener noreferrer">
+    Request My AI Workflow Audit <span className="arrow">→</span>
+  </a>
+)
+
+const PAINS = [
+  ['Leads wait.', 'Inquiries sit in an inbox until someone has time to qualify them and reply.'],
+  ['Onboarding runs on memory.', 'Every new client depends on someone remembering the next step.'],
+  ['Reports get rebuilt.', 'The same numbers, pulled from the same tools, assembled by hand every month.'],
+  ['Data gets copied.', 'The CRM, the spreadsheet and the project tool each hold a slightly different version of the truth.'],
+  ['Client emails get rewritten.', 'Updates, reminders and follow-ups are typed from scratch every time.'],
+  ['Knowledge lives in people’s heads.', 'When one person is out, the process slows down or stops.'],
+]
+
+// One realistic service-firm workflow, split into the three lanes. This is the
+// page's argument made visible, so the steps are concrete rather than generic.
+const LANES = [
+  {
+    tag: 'Manual',
+    title: 'Stays human',
+    note: 'Judgement, relationships and anything that changes every time.',
+    steps: ['Scoping call with the client', 'Pricing and contract terms', 'Sign-off on the delivery plan'],
+  },
+  {
+    tag: 'Hybrid',
+    title: 'AI drafts, a person decides',
+    note: 'AI does the first 80%. Nothing leaves without review.',
+    steps: ['Kickoff summary drafted from call notes', 'Welcome email drafted for review', 'Risks flagged from intake answers'],
+  },
+  {
+    tag: 'Automated',
+    title: 'Runs on rules',
+    note: 'Stable, repeatable steps with a clear right answer.',
+    steps: ['Intake form sent when the contract is signed', 'Client folder and project created', 'Tasks assigned, reminders scheduled', 'Weekly status digest sent'],
+  },
+]
+
+const DIFFERENTIATORS = [
+  ['Diagnosis before tools', 'We map how the work really happens, not how the process document says it should.'],
+  ['Deliberate boundaries', 'Every step is assigned to a person, to AI, or to rule-based automation, and we can tell you why.'],
+  ['Tool-agnostic', 'Zapier, Make, an agent, a script or the CRM you already pay for. The workflow decides, not our preferred stack.'],
+  ['More than triggers', 'Validation, quality checks, routing, research and decision support, added where app-to-app connections fall short.'],
+]
+
+const WORK = [
+  {
+    title: 'Quality control for AI-generated output',
+    builtFor: 'AI avatar video production',
+    problem: 'Every generated image and clip needed a manual check for realism errors, and the same flaws were caught inconsistently.',
+    system: 'Standardised realism checks applied to every output, with failures routed back for regeneration before anyone reviews them.',
+    change: 'Review moved from ad-hoc checking of everything to one pass against a fixed checklist, with fewer cleanup steps.',
+  },
+  {
+    title: 'Structured prompt generation',
+    builtFor: 'Repeatable AI image and video production',
+    problem: 'Prompts were written from scratch for each shot, so quality depended on who wrote them and how much time they had.',
+    system: 'A prompt system that assembles each prompt from a fixed brief, reference descriptions and shot requirements.',
+    change: 'Prompt writing became a standard step instead of a craft exercise, and output became consistent enough to review quickly.',
+  },
+  {
+    title: 'Research pipeline',
+    builtFor: 'Market and competitor research',
+    problem: 'Researching a market meant hours of manual searching, copying and summarising across scattered sources.',
+    system: 'A research workflow that gathers sources, extracts the relevant points and produces a structured first draft.',
+    change: 'Research now starts from an organised draft. Human time goes into judgement, not collection.',
+  },
+]
+
 export default function Home() {
   return (
     <>
@@ -37,12 +109,12 @@ export default function Home() {
             Cynkroniz Labs
           </a>
           <ul className="nav-links">
-            <li><a href="#how-it-works">How it works</a></li>
-            <li><a href="#included">What&apos;s included</a></li>
-            <li><a href="#pricing">Pricing</a></li>
-            <li><a href="#audit">Free audit</a></li>
+            <li><a href="#what-we-build">What we build</a></li>
+            <li><a href="#approach">Approach</a></li>
+            <li><a href="#work">Work</a></li>
+            <li><a href="#about">About</a></li>
           </ul>
-          <a href="#audit" className="btn btn-p btn-sm">Book a free audit</a>
+          <a href="#audit" className="btn btn-p btn-sm">Start here</a>
         </div>
       </nav>
 
@@ -50,131 +122,115 @@ export default function Home() {
       <header className="hero" id="top">
         <div className="wrap">
           <div className="hero-in">
-            <span className="eyebrow">Monthly growth membership</span>
-            <h1>Marketing and follow-up systems for <span className="hl">local businesses.</span></h1>
+            <span className="eyebrow">For consulting firms, agencies and professional-service teams</span>
+            <h1>
+              AI and automation for service businesses that have{' '}
+              <span className="hl">outgrown their manual workflows.</span>
+            </h1>
             <p className="lead">
-              One monthly subscription to keep your content, Google presence, website, and lead
-              follow-up moving every month.
+              We redesign the repetitive work between your people, software and clients so fewer
+              things depend on copying, chasing and remembering.
             </p>
             <div className="hero-ctas">
-              <a href="#audit" className="btn btn-p">Book a free growth audit <span className="arrow">→</span></a>
-              <a href="#included" className="btn btn-g">See what&apos;s included</a>
+              <AuditButton />
+              <a href="#what-we-build" className="btn btn-g">See what we build</a>
             </div>
-            <p className="hero-note">
-              Starting at <b>$997/mo</b> · Cancel anytime · No contracts, no retainers, no hiring
-            </p>
-          </div>
-
-          <div className="not-strip rv">
-            <span className="not-chip">Not an agency</span>
-            <span className="not-chip">Not a freelancer you have to chase</span>
-            <span className="not-chip">Not another tool to learn</span>
+            <p className="hero-note">No technical knowledge required · Built around the tools you already use</p>
           </div>
         </div>
       </header>
 
-      {/* MODEL */}
-      <section className="sec" id="how-it-works">
+      {/* PROBLEM */}
+      <section className="sec" id="problem">
         <div className="wrap">
           <div className="head rv">
-            <span className="eyebrow">The model</span>
-            <h2>One subscription.<br />Two types of work.</h2>
+            <span className="eyebrow">The problem</span>
+            <h2>You&apos;ve added people and software, but the work between those systems is still manual.</h2>
             <p className="lead">
-              Marketing that never stops, plus one real project moving forward at all times.
-              That&apos;s the whole thing.
+              Most growing firms already have the tools they need. The drag lives in the gaps between
+              them, and it gets worse with every new client and every new hire.
             </p>
           </div>
 
-          <div className="model-grid rv-stag">
-            <div className="model-card">
-              <span className="model-tag">Every month</span>
-              <h3>Always-on marketing</h3>
-              <p>
-                The work that has to keep happening whether you think about it or not. It runs in the
-                background, every month, without you sending a single request.
-              </p>
-              <ul className="model-ex">
-                <li>Social content written, designed, and posted</li>
-                <li>Google Business Profile kept active</li>
-                <li>Missed-call texts and chat replies going out</li>
-                <li>Lead follow-up firing on schedule</li>
-              </ul>
-            </div>
-
-            <div className="model-card accent">
-              <span className="model-tag">One at a time</span>
-              <h3>One active project</h3>
-              <p>
-                The work with a finish line. Request as many as you like. We build them one at a
-                time, in your order, until each one is done and approved.
-              </p>
-              <ul className="model-ex">
-                <li>A rebuilt page that actually converts</li>
-                <li>AI chat set up on your site</li>
-                <li>A new CRM automation or booking flow</li>
-                <li>Review requests, reactivation campaigns</li>
-              </ul>
-            </div>
-          </div>
+          <ul className="pain-grid rv-stag">
+            {PAINS.map(([title, body]) => (
+              <li key={title} className="pain">
+                <strong>{title}</strong> {body}
+              </li>
+            ))}
+          </ul>
 
           <p className="model-foot rv">
-            <strong>No hourly billing. No scope calls. No new hire.</strong>{' '}
-            One flat monthly price, and the queue keeps moving.
+            <strong>AI is useful when it fixes that work.</strong> Not when it becomes another subscription.
           </p>
         </div>
       </section>
 
-      {/* INCLUDED */}
-      <section className="sec" id="included" style={{ paddingTop: 0 }}>
+      {/* WHAT WE BUILD */}
+      <section className="sec" id="what-we-build" style={{ paddingTop: 0 }}>
         <div className="wrap">
           <div className="head rv">
-            <span className="eyebrow">What&apos;s included</span>
-            <h2>Five things, handled.</h2>
-            <p className="lead">Everything below is part of the membership. No tiers, no add-ons, no surprise invoices.</p>
+            <span className="eyebrow">What we build</span>
+            <h2>Systems for the work that repeats every week.</h2>
+            <p className="lead">
+              Six areas where service firms lose the most time between tools. Each system is built
+              around how your team already works.
+            </p>
           </div>
 
           <div className="inc-grid rv-stag">
             <div className="inc-card">
               <div className="inc-ico">
-                <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4" /><circle cx="12" cy="12" r="3.4" /><circle cx="17.2" cy="6.8" r="0.9" fill="currentColor" stroke="none" /></svg>
+                <svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4V5Z" /><path d="M8.5 10.5h7" /></svg>
               </div>
-              <h3>Social content</h3>
+              <h3>Lead handling and follow-up</h3>
               <p>
-                Posts written, designed, and scheduled for the platforms your customers actually use.
-                Consistent and on-brand, without you writing a caption ever again.
+                Capture inquiries, qualify them, draft the first response and trigger follow-up, so no
+                opportunity waits in an inbox.
               </p>
             </div>
 
             <div className="inc-card">
               <div className="inc-ico">
-                <svg viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z" /><circle cx="12" cy="10" r="2.6" /></svg>
+                <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.4" /><path d="M3 20c.6-3.4 3-5.4 6-5.4s5.4 2 6 5.4" /><path d="M16.5 8.5h5M19 6v5" /></svg>
               </div>
-              <h3>Google Business Profile</h3>
+              <h3>Client onboarding</h3>
               <p>
-                Photos, posts, services, hours, and review replies kept current, so you show up when
-                someone nearby searches for exactly what you do.
+                Collect intake information, generate documents, assign work and send updates, so every
+                new client moves through the same steps.
               </p>
             </div>
 
             <div className="inc-card">
               <div className="inc-ico">
-                <svg viewBox="0 0 24 24"><rect x="2.5" y="4" width="19" height="14" rx="3" /><path d="M2.5 8.5h19M8 21.5h8" /></svg>
+                <svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" /></svg>
               </div>
-              <h3>Website improvements</h3>
+              <h3>Reporting and administration</h3>
               <p>
-                Ongoing changes to the pages that make you money: clearer copy, faster load, better
-                calls to action. Improved monthly, not once every three years.
+                Pull data from multiple sources, organise it and prepare the report, instead of
+                rebuilding it by hand every cycle.
               </p>
             </div>
 
             <div className="inc-card">
               <div className="inc-ico">
-                <svg viewBox="0 0 24 24"><path d="M21 15.5v3a2 2 0 0 1-2.2 2A18.5 18.5 0 0 1 3.5 5.2 2 2 0 0 1 5.5 3h3a2 2 0 0 1 2 1.7c.12.9.34 1.8.64 2.65a2 2 0 0 1-.45 2.1L9.5 10.6a14.5 14.5 0 0 0 4 4l1.15-1.15a2 2 0 0 1 2.1-.45c.85.3 1.75.52 2.65.64a2 2 0 0 1 1.7 2Z" /></svg>
+                <svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m15.5 15.5 5 5" /></svg>
               </div>
-              <h3>Missed-call follow-up &amp; AI chat</h3>
+              <h3>Research and document handling</h3>
               <p>
-                Every missed call gets an instant text back. Every visitor gets an answer at 11pm.
-                Nobody who wanted to hire you is left waiting for a callback that never comes.
+                Gather sources, summarise and compare them, and produce the first draft of work that
+                currently takes hours.
+              </p>
+            </div>
+
+            <div className="inc-card">
+              <div className="inc-ico">
+                <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3" /><path d="m3.5 7 8.5 6 8.5-6" /></svg>
+              </div>
+              <h3>Client communication</h3>
+              <p>
+                Turn recordings, documents and team knowledge into repeatable updates, summaries and
+                content your clients actually read.
               </p>
             </div>
 
@@ -182,180 +238,207 @@ export default function Home() {
               <div className="inc-ico">
                 <svg viewBox="0 0 24 24"><circle cx="6" cy="6.5" r="2.6" /><circle cx="18" cy="17.5" r="2.6" /><path d="M8.6 6.5h5.4a3.4 3.4 0 0 1 3.4 3.4v4.9M15.4 17.5H10a3.4 3.4 0 0 1-3.4-3.4V9.2" /></svg>
               </div>
-              <h3>CRM automations</h3>
+              <h3>Custom workflows</h3>
               <p>
-                New leads land in one place and get followed up automatically: reminders, review
-                requests, and win-back campaigns running whether you remember them or not.
+                When an off-the-shelf tool doesn&apos;t fit the process, we design the system around how
+                your business actually operates.
               </p>
             </div>
-          </div>
-
-          <div className="svc rv">
-            <div className="svc-head">
-              <h3>And anything from the project queue</h3>
-              <p>
-                The five above run every month on their own. Alongside them you always have one
-                project moving. Request as many as you like, in any order, and we build them one at a
-                time until each is done.
-              </p>
-            </div>
-            <ul className="svc-chips">
-              <li className="svc-chip">An AI that answers your phone</li>
-              <li className="svc-chip">Chat that replies at 11pm</li>
-              <li className="svc-chip">Videos of you, without filming</li>
-              <li className="svc-chip">Booking and quote tools</li>
-              <li className="svc-chip">A new website, built fast</li>
-              <li className="svc-chip">Landing pages</li>
-              <li className="svc-chip">Free guides that collect emails</li>
-              <li className="svc-chip">Copy rewritten to convert</li>
-              <li className="svc-chip">Automatic review requests</li>
-              <li className="svc-chip">Win-back campaigns</li>
-              <li className="svc-chip">Email sequences</li>
-            </ul>
           </div>
         </div>
       </section>
 
-      {/* PROOF */}
-      <section className="proof">
+      {/* APPROACH: the centrepiece. The lanes show the human / AI / automation
+          boundary on a real workflow instead of just claiming it. */}
+      <section className="approach" id="approach">
         <div className="wrap">
-          <div className="proof-grid rv-stag">
-            <div>
-              <StatScramble>3.8M</StatScramble>
-              <div className="proof-l">Instagram views for one creator in a single 90 day stretch</div>
-            </div>
-            <div>
-              <StatScramble>30,000</StatScramble>
-              <div className="proof-l">New followers she picked up across those same 90 days</div>
-            </div>
-            <div>
-              <StatScramble>2.9M</StatScramble>
-              <div className="proof-l">TikTok views on her second account, with 33,000 shares</div>
-            </div>
-            <div>
-              <StatScramble>1.2M</StatScramble>
-              <div className="proof-l">Views across 8 videos on a channel built from zero</div>
-            </div>
+          <div className="head-c rv">
+            <span className="eyebrow">Our approach</span>
+            <h2>We don&apos;t start with AI.<br />We start with the workflow.</h2>
+            <p className="lead">
+              Most AI projects start with a tool and go looking for a problem. We start with how the
+              work actually happens, then decide what belongs to people, what belongs to AI, and what
+              belongs to plain automation.
+            </p>
           </div>
-          <p className="proof-cap">
-            These numbers come from creator accounts, not local businesses, but it&apos;s the same
-            system: find the angle, keep publishing, and build something that keeps working after the
-            work stops.
-          </p>
+
+          <div className="flow rv">
+            <div className="flow-cap">Example: client onboarding at a 20-person firm</div>
+            <div className="flow-lanes">
+              {LANES.map((lane) => (
+                <div key={lane.tag} className={`lane lane-${lane.tag.toLowerCase()}`}>
+                  <span className="lane-tag">{lane.tag}</span>
+                  <h3>{lane.title}</h3>
+                  <p className="lane-note">{lane.note}</p>
+                  <ul>
+                    {lane.steps.map((s) => <li key={s}>{s}</li>)}
+                  </ul>
+                </div>
+              ))}
+            </div>
+            <p className="flow-foot">
+              <strong>We don&apos;t automate unstable processes.</strong> If a step changes every time,
+              it stays manual until it settles. Automation comes after the process is clear, not before.
+            </p>
+          </div>
+
+          <div className="diff-grid rv-stag">
+            {DIFFERENTIATORS.map(([title, body]) => (
+              <div key={title} className="diff">
+                <h3>{title}</h3>
+                <p>{body}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* STEPS */}
-      <section className="sec">
+      {/* HOW IT WORKS */}
+      <section className="sec" id="how-it-works">
         <div className="wrap">
           <div className="head-c rv">
             <span className="eyebrow">How it works</span>
-            <h2>Three steps. That&apos;s it.</h2>
+            <h2>Five steps, in this order.</h2>
           </div>
 
-          <div className="steps rv-stag">
+          <div className="steps steps-5 rv-stag">
             <div className="step">
               <div className="step-n">1</div>
-              <h3>Subscribe</h3>
-              <p>
-                Pick the membership and you&apos;re in. Onboarding is one call and about 30 minutes of
-                your time. Then the always-on work starts immediately.
-              </p>
+              <h3>Map the workflow</h3>
+              <p>What happens today, step by step. Not how the process is supposed to work. How it really works.</p>
             </div>
             <div className="step">
               <div className="step-n">2</div>
-              <h3>Request</h3>
-              <p>
-                Send project requests any time, by text or email. Add as many as you want and put them
-                in whatever order matters most to you this month.
-              </p>
+              <h3>Find the bottlenecks</h3>
+              <p>Repetitive work, unnecessary handoffs, delays, duplicated effort and places where information gets lost.</p>
             </div>
             <div className="step">
               <div className="step-n">3</div>
-              <h3>Receive</h3>
+              <h3>Design the system</h3>
+              <p>What AI handles, what traditional automation handles, and where a person stays in control.</p>
+            </div>
+            <div className="step">
+              <div className="step-n">4</div>
+              <h3>Build and test</h3>
+              <p>We connect the pieces and test the workflow against the situations it will actually meet.</p>
+            </div>
+            <div className="step">
+              <div className="step-n">5</div>
+              <h3>Improve it</h3>
+              <p>Once it runs, we measure what works, fix what doesn&apos;t and expand only when it makes sense.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SELECTED WORK: Problem → System → Operational change. A number only
+          appears here when it was actually measured. */}
+      <section className="sec work" id="work">
+        <div className="wrap">
+          <div className="head rv">
+            <span className="eyebrow">Selected work</span>
+            <h2>Systems, not demos.</h2>
+            <p className="lead">
+              We build and run these systems in our own production work. The domain differs from
+              yours. The mechanisms are the ones service firms need: validation, structured
+              generation, routing and review.
+            </p>
+          </div>
+
+          <div className="work-grid rv-stag">
+            {WORK.map((w) => (
+              <article key={w.title} className="work-card">
+                <span className="work-for">Built for: {w.builtFor}</span>
+                <h3>{w.title}</h3>
+                <dl>
+                  <dt>Problem</dt><dd>{w.problem}</dd>
+                  <dt>System</dt><dd>{w.system}</dd>
+                  <dt>Operational change</dt><dd>{w.change}</dd>
+                </dl>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ABOUT */}
+      <section className="sec about" id="about" style={{ paddingTop: 0 }}>
+        <div className="wrap">
+          <div className="about-in rv">
+            <div>
+              <span className="eyebrow">About Cynkroniz Labs</span>
+              <h2>An AI workflow studio, not an AI agency.</h2>
+            </div>
+            <div className="about-body">
               <p>
-                Monthly work ships on schedule. Projects come back for review in a few days. Revise
-                until it&apos;s right, then we start the next one.
+                Cynkroniz Labs turns messy manual processes into practical systems for service
+                businesses that have grown faster than their operations.
+              </p>
+              <p>
+                We don&apos;t sell a platform or push a preferred tool stack. We build around the
+                workflow you actually have, and we would rather leave a step manual than automate
+                something that isn&apos;t ready.
+              </p>
+              <p>
+                You work directly with the founder, from the first workflow map to the finished system.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* PRICING */}
-      <section className="pricing on-dark" id="pricing">
+      {/* AUDIT REQUEST */}
+      <section className="band on-dark" id="audit">
         {/* Decorative only. Muted + playsInline so mobile browsers will autoplay it,
             and hidden outright for anyone who asked for reduced motion. */}
-        <div className="pricing-bg" aria-hidden="true">
+        <div className="band-bg" aria-hidden="true">
           <video autoPlay loop muted playsInline preload="metadata">
             <source src="/assets/hero.mp4" type="video/mp4" />
           </video>
         </div>
         <div className="wrap">
-          <div className="head-c rv">
-            <span className="eyebrow light">Pricing</span>
-            <h2>One price. Everything above.</h2>
-            <p>No setup fees, no tiers to decode, and no contract holding you in.</p>
-          </div>
-
-          <div className="price-card rv">
-            <div className="price-l">
-              <div className="price-name">
-                Growth Membership
-                <span className="price-badge">Cancel anytime</span>
-              </div>
-              <span className="price-from">Starting at</span>
-              <div className="price-amt">
-                <span className="price-cur">$</span>
-                <span className="price-num">997</span>
-                <span className="price-per">/month</span>
-              </div>
-              <p className="price-sub">Pause the month you don&apos;t need us. Come back when you do.</p>
-              <div className="price-ctas">
-                <a href="#join" className="btn btn-p">Join today <span className="arrow">→</span></a>
-                <a href="#audit" className="btn btn-g">Book a free audit</a>
-              </div>
-              <p className="price-fine">
-                Not sure yet? Take the audit first. Larger or multi-location businesses are quoted
-                after it, never before.
+          <div className="offer-card rv">
+            <div className="offer-l">
+              <span className="eyebrow light">AI Workflow Audit</span>
+              <h2>Find your first automation opportunity.</h2>
+              <p>
+                You don&apos;t need to know which AI tools to use. Start with something repetitive,
+                manual or frustrating inside your business. Tell us how it works today, and we&apos;ll
+                review it and come back to you.
               </p>
+              <AuditButton />
             </div>
-
-            <div className="price-r">
-              <h4>What you get</h4>
-              <ul className="price-list">
-                <li><Check />Always-on marketing: social content, Google profile, follow-up</li>
-                <li><Check />One active project at a time, start to finish</li>
-                <li><Check />Unlimited requests and unlimited revisions</li>
-                <li><Check />Missed-call text-back and AI chat, running 24/7</li>
-                <li><Check />A direct line to the person doing the work</li>
-                <li><Check />One monthly report, in plain English</li>
+            <div className="offer-r">
+              <h4>The audit shows you</h4>
+              <ul className="offer-list">
+                <li><Check />Where the workflow is breaking down</li>
+                <li><Check />Which steps AI could handle</li>
+                <li><Check />What should stay human</li>
+                <li><Check />Whether the workflow is ready for automation</li>
+                <li><Check />The first thing worth fixing</li>
               </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* AUDIT */}
-      <section className="audit" id="audit">
+      {/* CONTACT */}
+      <section className="contact" id="contact">
         <div className="wrap">
-          <div className="audit-card rv">
-            <div className="audit-l">
-              <span className="eyebrow">Free growth audit</span>
-              <h2>Start with a free audit.</h2>
+          <div className="contact-card rv">
+            <div className="contact-l">
+              <span className="eyebrow">Talk to us</span>
+              <h2>Already know what workflow needs fixing?</h2>
               <p>
-                Tell me about your business. I&apos;ll look at your website, your Google profile, and
-                what happens to a lead after it comes in, then tell you the three things worth fixing
-                first. Whether or not you ever hire us.
+                Show us how it works today. We&apos;ll help you figure out what the better version
+                should look like.
               </p>
-              <ul className="audit-checks">
-                <li><Check />A real look at your actual business, not a generic checklist</li>
-                <li><Check />The three fixes that would move the needle fastest</li>
-                <li><Check />An honest answer on whether the membership is even right for you</li>
-                <li><Check />No pitch, no pressure, no obligation</li>
+              <ul className="contact-checks">
+                <li><Check />A reply within one business day</li>
+                <li><Check />An honest view on whether it&apos;s worth automating yet</li>
               </ul>
             </div>
-            <div className="audit-r" id="join">
+            <div className="contact-r">
               <ConsultationForm />
             </div>
           </div>
@@ -371,29 +454,31 @@ export default function Home() {
                 <RookMark />
                 Cynkroniz Labs
               </a>
-              <p>A monthly growth membership for local businesses that need marketing and follow-up to just keep running.</p>
+              <p>AI workflow systems for professional-service businesses that have outgrown their manual processes.</p>
             </div>
             <div className="footer-links">
               <div className="footer-col">
                 <h4>Navigate</h4>
                 <ul>
+                  <li><a href="#what-we-build">What we build</a></li>
+                  <li><a href="#approach">Approach</a></li>
                   <li><a href="#how-it-works">How it works</a></li>
-                  <li><a href="#included">What&apos;s included</a></li>
-                  <li><a href="#pricing">Pricing</a></li>
-                  <li><a href="#audit">Free growth audit</a></li>
+                  <li><a href="#work">Work</a></li>
+                  <li><a href="#about">About</a></li>
                 </ul>
               </div>
               <div className="footer-col">
                 <h4>Contact</h4>
                 <ul>
                   <li><a href="mailto:hello@cynkronizlabs.cloud">hello@cynkronizlabs.cloud</a></li>
-                  <li><a href="#audit">Book a free audit</a></li>
+                  <li><a href={AUDIT_FORM_URL} target="_blank" rel="noopener noreferrer">Request an audit</a></li>
+                  <li><a href="#contact">Talk to us</a></li>
                 </ul>
               </div>
             </div>
           </div>
           <div className="footer-bottom">
-            <span>Content · Google · Website · Follow-up</span>
+            <span>AI Workflow Design · Automation · Intelligent Systems</span>
             <span>© 2026 Cynkroniz Labs. All rights reserved.</span>
           </div>
         </div>

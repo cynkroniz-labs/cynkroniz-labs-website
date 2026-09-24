@@ -1,30 +1,22 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { createClient } from '@/lib/supabase'
 
 // Matches the address already published in the site footer.
 const CONTACT_EMAIL = 'hello@cynkronizlabs.cloud'
 
-// Written into `bottleneck` when someone arrives via "Join today" instead of the
-// audit CTA, so buy-now leads are obvious in the table without a schema change.
-const JOIN_INTENT = 'Ready to join, not looking for an audit first'
+// Bands follow the ideal-customer range (roughly 5 to 55+ people) so leads can
+// be sorted by fit at a glance.
+const TEAM_SIZES = ['1–4', '5–15', '16–55', '56+']
 
+// The "Talk to us" form, for visitors who already know which workflow needs
+// fixing. Anyone unsure goes to the audit request (a Google Form) instead.
 export default function ConsultationForm() {
-  const [fields, setFields] = useState({ name: '', business: '', website: '', email: '', bottleneck: '' })
+  const [fields, setFields] = useState({ name: '', email: '', business: '', teamSize: '', workflow: '', website: '' })
   const [errors, setErrors] = useState({})
   const [loading, setLoading] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [serverError, setServerError] = useState(false)
-  const [joining, setJoining] = useState(false)
-
-  // Both CTAs land on this form. #join means they clicked through from pricing
-  // ready to sign up, so the form asks to start a membership rather than an audit.
-  useEffect(() => {
-    const read = () => setJoining(window.location.hash === '#join')
-    read()
-    window.addEventListener('hashchange', read)
-    return () => window.removeEventListener('hashchange', read)
-  }, [])
 
   function set(key) {
     return (e) => {
@@ -36,11 +28,9 @@ export default function ConsultationForm() {
   async function handleSubmit(e) {
     e.preventDefault()
     const newErrors = {}
-    if (!fields.name.trim()) newErrors.name = true
-    if (!fields.business.trim()) newErrors.business = true
-    if (!fields.email.trim()) newErrors.email = true
-    // Someone signing up is not being asked to diagnose themselves first.
-    if (!joining && !fields.bottleneck) newErrors.bottleneck = true
+    for (const key of ['name', 'email', 'business', 'teamSize', 'workflow']) {
+      if (!fields[key].trim()) newErrors[key] = true
+    }
     if (Object.keys(newErrors).length > 0) { setErrors(newErrors); return }
 
     setLoading(true)
@@ -49,10 +39,12 @@ export default function ConsultationForm() {
       const supabase = createClient()
       const { error } = await supabase.from('audit_leads').insert({
         name: fields.name,
-        business: fields.business,
-        website: fields.website || null,
         email: fields.email,
-        bottleneck: joining ? JOIN_INTENT : fields.bottleneck,
+        business: fields.business,
+        team_size: fields.teamSize,
+        // `bottleneck` predates this form; it now holds the workflow description.
+        bottleneck: fields.workflow,
+        website: fields.website || null,
       })
       if (error) throw error
       setSubmitted(true)
@@ -68,11 +60,7 @@ export default function ConsultationForm() {
     return (
       <div className="form-success">
         <h3>Got it.</h3>
-        <p>
-          {joining
-            ? "I'll email you within one business day to get you set up and take payment."
-            : "I'll email you within one business day with a couple of times for your audit."}
-        </p>
+        <p>We&apos;ll read through how the workflow runs today and reply within one business day.</p>
       </div>
     )
   }
@@ -81,59 +69,58 @@ export default function ConsultationForm() {
 
   return (
     <form onSubmit={handleSubmit} noValidate style={{ display: 'grid', gap: '14px' }}>
-      <h3>{joining ? 'Start your membership' : 'Request your audit'}</h3>
-      <p className="form-intro">
-        {joining
-          ? "Fill this in and I'll email you the onboarding details and payment link."
-          : "Fill this in and I'll email you back with a time."}
-      </p>
+      <h3>Tell us about the workflow</h3>
+      <p className="form-intro">A few details and a plain description is plenty.</p>
       <div className="frow">
         <div className="fld">
           <label htmlFor="f-name">Your Name</label>
-          <input id="f-name" type="text" placeholder="Jane Doe" value={fields.name} onChange={set('name')} style={errStyle('name')} />
+          <input id="f-name" type="text" autoComplete="name" placeholder="Jane Doe" value={fields.name} onChange={set('name')} style={errStyle('name')} />
         </div>
         <div className="fld">
-          <label htmlFor="f-biz">Business Name</label>
-          <input id="f-biz" type="text" placeholder="Acme Plumbing" value={fields.business} onChange={set('business')} style={errStyle('business')} />
+          <label htmlFor="f-email">Work Email</label>
+          <input id="f-email" type="email" autoComplete="email" placeholder="jane@yourfirm.com" value={fields.email} onChange={set('email')} style={errStyle('email')} />
         </div>
       </div>
-      <div className="fld">
-        <label htmlFor="f-url">Website URL</label>
-        <input id="f-url" type="url" placeholder="https://yourbusiness.com" value={fields.website} onChange={set('website')} />
-      </div>
-      <div className="fld">
-        <label htmlFor="f-email">Email Address</label>
-        <input id="f-email" type="email" placeholder="you@yourbusiness.com" value={fields.email} onChange={set('email')} style={errStyle('email')} />
-      </div>
-      {!joining && (
+      <div className="frow">
         <div className="fld">
-          <label htmlFor="f-bottleneck">What&apos;s Slipping Right Now</label>
-          <select id="f-bottleneck" value={fields.bottleneck} onChange={set('bottleneck')} style={errStyle('bottleneck')}>
+          <label htmlFor="f-biz">Company</label>
+          <input id="f-biz" type="text" autoComplete="organization" placeholder="Acme Advisory" value={fields.business} onChange={set('business')} style={errStyle('business')} />
+        </div>
+        <div className="fld">
+          <label htmlFor="f-size">Team Size</label>
+          <select id="f-size" value={fields.teamSize} onChange={set('teamSize')} style={errStyle('teamSize')}>
             <option value="" disabled>Choose one</option>
-            <option>We post when we remember, which isn&apos;t often</option>
-            <option>Nobody finds us on Google</option>
-            <option>The website doesn&apos;t turn visitors into calls</option>
-            <option>We miss calls and never call back</option>
-            <option>Leads come in and then go quiet</option>
-            <option>Past customers never hear from us again</option>
-            <option>Not sure, I need fresh eyes</option>
+            {TEAM_SIZES.map((s) => <option key={s} value={s}>{s} people</option>)}
           </select>
         </div>
-      )}
+      </div>
+      <div className="fld">
+        <label htmlFor="f-workflow">What workflow is causing the most friction right now?</label>
+        <textarea
+          id="f-workflow"
+          rows={4}
+          placeholder="e.g. New client onboarding. Intake comes in by email, someone copies it into the CRM, then builds the project folder by hand."
+          value={fields.workflow}
+          onChange={set('workflow')}
+          style={errStyle('workflow')}
+        />
+      </div>
+      <div className="fld">
+        <label htmlFor="f-url">Website URL (optional)</label>
+        <input id="f-url" type="url" autoComplete="url" placeholder="https://yourfirm.com" value={fields.website} onChange={set('website')} />
+      </div>
       {/* On failure the submission is not stored anywhere, so always give the visitor
           a way through rather than a dead end. */}
       {serverError && (
         <p className="form-error">
           That didn&apos;t send. Please try again, or email{' '}
-          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> directly and I&apos;ll pick it up from there.
+          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> directly and we&apos;ll pick it up from there.
         </p>
       )}
       <div className="form-footer">
-        <span className="form-note">{joining ? '↳ Cancel anytime.' : '↳ Free. No pitch.'}</span>
+        <span className="form-note">↳ No obligation.</span>
         <button type="submit" className="btn btn-p btn-sm" disabled={loading}>
-          {loading
-            ? 'Sending…'
-            : <>{joining ? 'Join today' : 'Book my audit'} <span className="arrow">→</span></>}
+          {loading ? 'Sending…' : <>Send it over <span className="arrow">→</span></>}
         </button>
       </div>
     </form>
