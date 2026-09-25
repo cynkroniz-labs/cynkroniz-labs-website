@@ -1,6 +1,5 @@
 'use client'
 import { useState } from 'react'
-import { createClient } from '@/lib/supabase'
 
 // Matches the address already published in the site footer.
 const CONTACT_EMAIL = 'hello@cynkronizlabs.cloud'
@@ -17,6 +16,8 @@ export default function ConsultationForm() {
   const [loading, setLoading] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [serverError, setServerError] = useState(false)
+  // Spam trap. Hidden from people; bots that autofill it are dropped server-side.
+  const [honeypot, setHoneypot] = useState('')
 
   function set(key) {
     return (e) => {
@@ -36,29 +37,16 @@ export default function ConsultationForm() {
     setLoading(true)
     setServerError(false)
     try {
-      const supabase = createClient()
-      const lead = {
-        name: fields.name,
-        email: fields.email,
-        business: fields.business,
-        // `bottleneck` predates this form; it now holds the workflow description.
-        bottleneck: fields.workflow,
-        website: fields.website || null,
-      }
-      let { error } = await supabase.from('audit_leads').insert({ ...lead, team_size: fields.teamSize })
-      // PGRST204 = column not found: the team_size migration hasn't been applied
-      // yet. Keep the lead rather than lose it, with team size folded into the
-      // description. Safe to delete once the migration is live.
-      if (error?.code === 'PGRST204') {
-        ;({ error } = await supabase.from('audit_leads').insert({
-          ...lead,
-          bottleneck: `[Team size: ${fields.teamSize}] ${fields.workflow}`,
-        }))
-      }
-      if (error) throw error
+      // The server route stores the lead and emails the notification.
+      const res = await fetch('/api/audit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...fields, company_url_hp: honeypot }),
+      })
+      if (!res.ok) throw new Error(`Submit failed: ${res.status}`)
       setSubmitted(true)
     } catch (err) {
-      console.error('Supabase insert error:', err)
+      console.error('Lead submit error:', err)
       setServerError(true)
     } finally {
       setLoading(false)
@@ -118,6 +106,16 @@ export default function ConsultationForm() {
         <label htmlFor="f-url">Website URL (optional)</label>
         <input id="f-url" type="url" autoComplete="url" placeholder="https://yourfirm.com" value={fields.website} onChange={set('website')} />
       </div>
+      <input
+        type="text"
+        name="company_url_hp"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        value={honeypot}
+        onChange={(e) => setHoneypot(e.target.value)}
+        style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }}
+      />
       {/* On failure the submission is not stored anywhere, so always give the visitor
           a way through rather than a dead end. */}
       {serverError && (
