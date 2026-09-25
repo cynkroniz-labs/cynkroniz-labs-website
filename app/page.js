@@ -120,6 +120,14 @@ export default function Home() {
 
       {/* HERO */}
       <header className="hero" id="top">
+        {/* The robot loop, fading into the page on its left edge so the headline
+            keeps full contrast. Muted + playsInline so mobile browsers autoplay it;
+            reduced-motion visitors get the still poster instead. */}
+        <div className="hero-media" aria-hidden="true">
+          <video autoPlay loop muted playsInline preload="auto" poster="/assets/hero-poster.jpg">
+            <source src="/assets/hero.mp4" type="video/mp4" />
+          </video>
+        </div>
         <div className="wrap">
           <div className="hero-in">
             <span className="eyebrow">For consulting firms, agencies and professional-service teams</span>
@@ -363,13 +371,6 @@ export default function Home() {
 
       {/* AUDIT REQUEST */}
       <section className="band on-dark" id="audit">
-        {/* Decorative only. Muted + playsInline so mobile browsers will autoplay it,
-            and hidden outright for anyone who asked for reduced motion. */}
-        <div className="band-bg" aria-hidden="true">
-          <video autoPlay loop muted playsInline preload="metadata">
-            <source src="/assets/hero.mp4" type="video/mp4" />
-          </video>
-        </div>
         <div className="wrap">
           <div className="offer-card rv">
             <div className="offer-l">

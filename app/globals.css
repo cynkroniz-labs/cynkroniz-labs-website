@@ -172,7 +172,39 @@ strong { color: var(--ink); font-weight: 600; }
   background: radial-gradient(circle, rgba(90, 208, 244, 0.35), transparent 62%);
   pointer-events: none;
 }
-.hero-in { position: relative; max-width: 900px; }
+.hero-in { position: relative; z-index: 1; max-width: 640px; }
+.hero h1 { font-size: clamp(40px, 5vw, 66px); }
+
+/* Robot loop on the right half. The mask fades its left edge into the paper
+   so the headline never sits on top of busy footage. */
+.hero-media {
+  position: absolute; top: 0; right: 0; bottom: 0; width: 54%;
+  z-index: 0; pointer-events: none;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 34%), linear-gradient(to top, transparent 0%, #000 18%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 34%), linear-gradient(to top, transparent 0%, #000 18%);
+  -webkit-mask-composite: source-in; mask-composite: intersect;
+}
+.hero-media video {
+  width: 100%; height: 100%; object-fit: cover;
+  /* The robot stands right of centre in the source frame; keep him in view. */
+  object-position: 68% 40%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-media video { display: none; }
+  .hero-media { background: url("/assets/hero-poster.jpg") 68% 40% / cover no-repeat; }
+}
+/* Below tablet width there is no room beside the headline, so the footage
+   becomes a framed panel under the buttons instead of a background. */
+@media (max-width: 980px) {
+  .hero { padding-bottom: 40px; display: flex; flex-direction: column; }
+  .hero-in { max-width: none; }
+  .hero-media {
+    order: 2;
+    position: relative; width: auto; height: auto; margin: 36px 28px 0;
+    aspect-ratio: 16 / 10; border-radius: var(--r-xl); overflow: hidden;
+    -webkit-mask-image: none; mask-image: none;
+  }
+}
 .hero .eyebrow { margin-bottom: 26px; }
 .hero h1 { margin-bottom: 28px; }
 .hero .lead { max-width: 660px; margin-bottom: 40px; }
@@ -399,21 +431,7 @@ strong { color: var(--ink); font-weight: 600; }
    ============================================= */
 .band { background: var(--dark); color: #fff; padding: 112px 0; position: relative; overflow: hidden; }
 
-/* Robot loop behind the audit block. Sits under a dark scrim so the
-   card and copy keep their contrast no matter which frame is showing. */
-.band-bg { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
-.band-bg video {
-  width: 100%; height: 100%; object-fit: cover;
-  opacity: 0.22; filter: saturate(0.8);
-}
-.band-bg::after {
-  content: ""; position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 70% 60% at 50% 45%, rgba(11, 15, 22, 0.55), rgba(11, 15, 22, 0.88) 70%),
-    linear-gradient(180deg, var(--dark) 0%, transparent 22%, transparent 78%, var(--dark) 100%);
-}
 .band > .wrap { z-index: 1; }
-@media (prefers-reduced-motion: reduce) { .band-bg { display: none; } }
 
 .band::before {
   content: ""; position: absolute; left: 50%; top: -240px; transform: translateX(-50%);
