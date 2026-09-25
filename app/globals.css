@@ -347,19 +347,6 @@ strong { color: var(--ink); font-weight: 600; }
 .work-card dd:last-child { color: var(--ink); font-weight: 500; margin-bottom: 0; }
 @media (max-width: 900px) { .work-grid { grid-template-columns: 1fr; } }
 
-/* =============================================
-   ABOUT
-   ============================================= */
-.about-in {
-  display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 28px 64px;
-  padding-top: 72px; border-top: 1px solid var(--line);
-}
-.about-in .eyebrow { margin-bottom: 20px; }
-.about-in h2 { font-size: clamp(30px, 3.8vw, 46px); }
-.about-body { display: grid; gap: 16px; align-content: start; }
-.about-body p { font-size: 17px; line-height: 1.65; }
-.about-body p:last-child { color: var(--ink); font-weight: 500; }
-@media (max-width: 860px) { .about-in { grid-template-columns: 1fr; } }
 
 /* =============================================
    PROOF STRIP
@@ -447,6 +434,10 @@ strong { color: var(--ink); font-weight: 600; }
 .offer-l h2 { font-size: clamp(30px, 3.6vw, 44px); margin-bottom: 18px; }
 .offer-l p { font-size: 16.5px; line-height: 1.6; color: rgba(255, 255, 255, 0.7); margin-bottom: 32px; }
 .offer-l .btn { width: 100%; }
+.offer-l .offer-note {
+  margin: 16px 0 0; text-align: center;
+  font-family: var(--font-m); font-size: 12px; color: rgba(255, 255, 255, 0.5);
+}
 .offer-r { padding: 52px 46px; }
 .offer-r h4 {
   font-family: var(--font-m); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;

@@ -111,8 +111,8 @@ export default function Home() {
           <ul className="nav-links">
             <li><a href="#what-we-build">What we build</a></li>
             <li><a href="#approach">Approach</a></li>
+            <li><a href="#how-it-works">How it works</a></li>
             <li><a href="#work">Work</a></li>
-            <li><a href="#about">About</a></li>
           </ul>
           <a href="#audit" className="btn btn-p btn-sm">Start here</a>
         </div>
@@ -135,7 +135,7 @@ export default function Home() {
               <AuditButton />
               <a href="#what-we-build" className="btn btn-g">See what we build</a>
             </div>
-            <p className="hero-note">No technical knowledge required · Built around the tools you already use</p>
+            <p className="hero-note"><b>Free audit</b> · No technical knowledge required · Built around the tools you already use</p>
           </div>
         </div>
       </header>
@@ -361,32 +361,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ABOUT */}
-      <section className="sec about" id="about" style={{ paddingTop: 0 }}>
-        <div className="wrap">
-          <div className="about-in rv">
-            <div>
-              <span className="eyebrow">About Cynkroniz Labs</span>
-              <h2>An AI workflow studio, not an AI agency.</h2>
-            </div>
-            <div className="about-body">
-              <p>
-                Cynkroniz Labs turns messy manual processes into practical systems for service
-                businesses that have grown faster than their operations.
-              </p>
-              <p>
-                We don&apos;t sell a platform or push a preferred tool stack. We build around the
-                workflow you actually have, and we would rather leave a step manual than automate
-                something that isn&apos;t ready.
-              </p>
-              <p>
-                You work directly with the founder, from the first workflow map to the finished system.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* AUDIT REQUEST */}
       <section className="band on-dark" id="audit">
         {/* Decorative only. Muted + playsInline so mobile browsers will autoplay it,
@@ -399,7 +373,7 @@ export default function Home() {
         <div className="wrap">
           <div className="offer-card rv">
             <div className="offer-l">
-              <span className="eyebrow light">AI Workflow Audit</span>
+              <span className="eyebrow light">Free AI Workflow Audit</span>
               <h2>Find your first automation opportunity.</h2>
               <p>
                 You don&apos;t need to know which AI tools to use. Start with something repetitive,
@@ -407,6 +381,7 @@ export default function Home() {
                 review it and come back to you.
               </p>
               <AuditButton />
+              <p className="offer-note">Free · No obligation</p>
             </div>
             <div className="offer-r">
               <h4>The audit shows you</h4>
@@ -434,7 +409,7 @@ export default function Home() {
                 should look like.
               </p>
               <ul className="contact-checks">
-                <li><Check />A reply within one business day</li>
+                <li><Check />A reply from the people who would build it</li>
                 <li><Check />An honest view on whether it&apos;s worth automating yet</li>
               </ul>
             </div>
@@ -464,14 +439,13 @@ export default function Home() {
                   <li><a href="#approach">Approach</a></li>
                   <li><a href="#how-it-works">How it works</a></li>
                   <li><a href="#work">Work</a></li>
-                  <li><a href="#about">About</a></li>
                 </ul>
               </div>
               <div className="footer-col">
                 <h4>Contact</h4>
                 <ul>
                   <li><a href="mailto:hello@cynkronizlabs.cloud">hello@cynkronizlabs.cloud</a></li>
-                  <li><a href={AUDIT_FORM_URL} target="_blank" rel="noopener noreferrer">Request an audit</a></li>
+                  <li><a href={AUDIT_FORM_URL} target="_blank" rel="noopener noreferrer">Request a free audit</a></li>
                   <li><a href="#contact">Talk to us</a></li>
                 </ul>
               </div>

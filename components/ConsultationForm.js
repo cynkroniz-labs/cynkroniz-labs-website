@@ -60,7 +60,7 @@ export default function ConsultationForm() {
     return (
       <div className="form-success">
         <h3>Got it.</h3>
-        <p>We&apos;ll read through how the workflow runs today and reply within one business day.</p>
+        <p>We&apos;ll read through how the workflow runs today and get back to you.</p>
       </div>
     )
   }
