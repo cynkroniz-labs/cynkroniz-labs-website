@@ -37,15 +37,24 @@ export default function ConsultationForm() {
     setServerError(false)
     try {
       const supabase = createClient()
-      const { error } = await supabase.from('audit_leads').insert({
+      const lead = {
         name: fields.name,
         email: fields.email,
         business: fields.business,
-        team_size: fields.teamSize,
         // `bottleneck` predates this form; it now holds the workflow description.
         bottleneck: fields.workflow,
         website: fields.website || null,
-      })
+      }
+      let { error } = await supabase.from('audit_leads').insert({ ...lead, team_size: fields.teamSize })
+      // PGRST204 = column not found: the team_size migration hasn't been applied
+      // yet. Keep the lead rather than lose it, with team size folded into the
+      // description. Safe to delete once the migration is live.
+      if (error?.code === 'PGRST204') {
+        ;({ error } = await supabase.from('audit_leads').insert({
+          ...lead,
+          bottleneck: `[Team size: ${fields.teamSize}] ${fields.workflow}`,
+        }))
+      }
       if (error) throw error
       setSubmitted(true)
     } catch (err) {

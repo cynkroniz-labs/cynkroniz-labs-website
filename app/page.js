@@ -130,20 +130,20 @@ export default function Home() {
         </div>
         <div className="wrap">
           <div className="hero-in">
-            <span className="eyebrow">For consulting firms, agencies and professional-service teams</span>
+            <span className="eyebrow">AI workflow systems for service businesses</span>
             <h1>
-              AI and automation for service businesses that have{' '}
-              <span className="hl">outgrown their manual workflows.</span>
+              Stop automating <span className="hl">broken workflows.</span>
             </h1>
             <p className="lead">
-              We redesign the repetitive work between your people, software and clients so fewer
-              things depend on copying, chasing and remembering.
+              For consulting firms, agencies and professional-service teams that have outgrown their
+              manual workflows. We redesign the repetitive work between your people, software and
+              clients so fewer things depend on copying, chasing and remembering.
             </p>
             <div className="hero-ctas">
               <AuditButton />
               <a href="#what-we-build" className="btn btn-g">See what we build</a>
             </div>
-            <p className="hero-note"><b>Free audit</b> · No technical knowledge required · Built around the tools you already use</p>
+            <p className="hero-note"><b>Free audit</b> · No technical knowledge required</p>
           </div>
         </div>
       </header>
@@ -306,7 +306,7 @@ export default function Home() {
         <div className="wrap">
           <div className="head-c rv">
             <span className="eyebrow">How it works</span>
-            <h2>Five steps, in this order.</h2>
+            <h2>Map the work. Design the logic. Build the AI system.</h2>
           </div>
 
           <div className="steps steps-5 rv-stag">
